@@ -9,20 +9,14 @@
                 "folderUri": "file:///home/vboxuser"
             }
         ],
-        "emptyWindows": [
-            {
-                "backupFolder": "1773677497369"
-            }
-        ]
+        "emptyWindows": []
     },
     "windowControlHeight": 35,
     "profileAssociations": {
         "workspaces": {
             "file:///home/vboxuser": "__default__profile__"
         },
-        "emptyWindows": {
-            "1773677497369": "__default__profile__"
-        }
+        "emptyWindows": {}
     },
     "theme": "vs-dark",
     "themeBackground": "#121314",

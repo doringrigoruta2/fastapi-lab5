@@ -6,7 +6,7 @@
 # absolute path. No other format is supported.
 # 
 XDG_DESKTOP_DIR="/home/vboxuser/Desktop"
-XDG_DOWNLOAD_DIR="/home/vboxuser/Downloads"
+XDG_DOWNLOAD_DIR="$HOME/"
 XDG_TEMPLATES_DIR="/home/vboxuser/Templates"
 XDG_PUBLICSHARE_DIR="/home/vboxuser/Public"
 XDG_DOCUMENTS_DIR="/home/vboxuser/Documents"

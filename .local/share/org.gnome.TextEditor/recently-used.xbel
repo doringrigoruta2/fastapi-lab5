@@ -3,29 +3,47 @@
       xmlns:bookmark="http://www.freedesktop.org/standards/desktop-bookmarks"
       xmlns:mime="http://www.freedesktop.org/standards/shared-mime-info"
 >
-  <bookmark href="file:///home/vboxuser/requirements.txt" added="2026-03-16T17:27:00.843388Z" modified="2026-06-05T22:25:29.143177Z" visited="2026-06-05T20:58:22.318179Z">
+  <bookmark href="file:///home/vboxuser/requirements.txt" added="2026-03-16T17:27:00.843388Z" modified="2026-06-05T23:08:28.269144Z" visited="2026-06-05T22:38:26.886130Z">
     <info>
       <metadata owner="http://freedesktop.org">
         <bookmark:applications>
-          <bookmark:application name="gnome-text-editor" exec="&apos;gnome-text-editor %u&apos;" modified="2026-06-05T22:25:29.143153Z" count="181"/>
+          <bookmark:application name="gnome-text-editor" exec="&apos;gnome-text-editor %u&apos;" modified="2026-06-05T23:08:28.269144Z" count="195"/>
         </bookmark:applications>
       </metadata>
     </info>
   </bookmark>
-  <bookmark href="file:///home/vboxuser/main.py" added="2026-03-16T17:31:20.645334Z" modified="2026-06-05T22:25:29.143181Z" visited="2026-06-05T20:58:22.629124Z">
+  <bookmark href="file:///home/vboxuser/main.py" added="2026-03-16T17:31:20.645334Z" modified="2026-06-05T23:08:28.269149Z" visited="2026-06-05T22:38:27.089962Z">
     <info>
       <metadata owner="http://freedesktop.org">
         <bookmark:applications>
-          <bookmark:application name="gnome-text-editor" exec="&apos;gnome-text-editor %u&apos;" modified="2026-06-05T22:25:29.143181Z" count="164"/>
+          <bookmark:application name="gnome-text-editor" exec="&apos;gnome-text-editor %u&apos;" modified="2026-06-05T23:08:28.269149Z" count="178"/>
         </bookmark:applications>
       </metadata>
     </info>
   </bookmark>
-  <bookmark href="file:///home/vboxuser/index.html" added="2026-06-05T20:17:37.331863Z" modified="2026-06-05T22:25:29.143179Z" visited="2026-06-05T20:58:22.617798Z">
+  <bookmark href="file:///home/vboxuser/index.html" added="2026-06-05T20:17:37.331863Z" modified="2026-06-05T23:08:28.269146Z" visited="2026-06-05T22:38:26.985871Z">
     <info>
       <metadata owner="http://freedesktop.org">
         <bookmark:applications>
-          <bookmark:application name="gnome-text-editor" exec="&apos;gnome-text-editor %u&apos;" modified="2026-06-05T22:25:29.143179Z" count="29"/>
+          <bookmark:application name="gnome-text-editor" exec="&apos;gnome-text-editor %u&apos;" modified="2026-06-05T23:08:28.269146Z" count="43"/>
+        </bookmark:applications>
+      </metadata>
+    </info>
+  </bookmark>
+  <bookmark href="file:///home/vboxuser/.env" added="2026-06-05T22:39:21.287435Z" modified="2026-06-05T23:08:28.269142Z" visited="2026-06-05T22:39:17.598027Z">
+    <info>
+      <metadata owner="http://freedesktop.org">
+        <bookmark:applications>
+          <bookmark:application name="gnome-text-editor" exec="&apos;gnome-text-editor %u&apos;" modified="2026-06-05T23:08:28.269140Z" count="11"/>
+        </bookmark:applications>
+      </metadata>
+    </info>
+  </bookmark>
+  <bookmark href="file:///home/vboxuser/render.yaml" added="2026-06-05T22:40:34.229568Z" modified="2026-06-05T23:08:28.269148Z" visited="2026-06-05T22:40:31.333933Z">
+    <info>
+      <metadata owner="http://freedesktop.org">
+        <bookmark:applications>
+          <bookmark:application name="gnome-text-editor" exec="&apos;gnome-text-editor %u&apos;" modified="2026-06-05T23:08:28.269148Z" count="7"/>
         </bookmark:applications>
       </metadata>
     </info>

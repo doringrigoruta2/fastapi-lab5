@@ -1,6 +1,19 @@
-venv/
+# Configurație locală - nu se urcă pe GitHub
+.env
+
+# Baza de date locală
+*.db
+
+# Cache Python
 __pycache__/
-sarcini.db
+*.pyc
+*.pyo
+
+# Mediul virtual
+venv/
+.venv/
+
+# Fișiere de sistem sau instalări rătăcite
 *.deb
 Downloads/
 .DS_Store

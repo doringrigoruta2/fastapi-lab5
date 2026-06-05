@@ -1,20 +1,26 @@
+import os
 import sqlite3
 from typing import Optional
-from datetime import datetime
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import jwt
 from passlib.context import CryptContext
+from dotenv import load_dotenv
 
-# --- CONFIGURĂRI INIȚIALE ---
-SECRET_KEY = "cheie_secreta_super_sigura_pentru_laborator"
-ALGORITHM = "HS256"
+# --- INCARCARE CONFIGURATII PRIN VARIABILE DE MEDIU (LAB #05) ---
+load_dotenv()
+
+SECRET_KEY = os.environ.get("SECRET_KEY", "cheie-dev-de-inlocuit-super-lunga")
+ALGORITHM = os.environ.get("ALGORITHM", "HS256")
+EXPIRARE_TOKEN_MINUTE = int(os.environ.get("EXPIRARE_TOKEN_MINUTE", "30"))
+DATABASE_PATH = os.environ.get("DATABASE_PATH", "sarcini.db")  # Cerința B
 
 app = FastAPI(title="Gestionar Sarcini API")
 
-# --- CONFIGURARE CORS ---
+# --- CONFIGURARE CORS (Rezolvă erorile OPTIONS și 405) ---
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -26,12 +32,10 @@ app.add_middleware(
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="autentificare")
 
-# INITIALIZARE BAZĂ DE DATE SQLITE
+# INITIALIZARE BAZĂ DE DATE (Folosește DATABASE_PATH configurabil)
 def init_db():
-    # Modifică linia de mai jos:
-    conn = sqlite3.connect("sarcini.db", check_same_thread=False)
+    conn = sqlite3.connect(DATABASE_PATH, check_same_thread=False)
     cursor = conn.cursor()
-    # ... restul codului din init_db rămâne neschimbat ...
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS utilizatori (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -55,8 +59,7 @@ def init_db():
 init_db()
 
 def get_db():
-    # Modifică linia de mai jos:
-    conn = sqlite3.connect("sarcini.db", check_same_thread=False)
+    conn = sqlite3.connect(DATABASE_PATH, check_same_thread=False)
     conn.row_factory = sqlite3.Row
     try:
         yield conn
@@ -106,6 +109,11 @@ async def obtine_utilizator_curent(token: str = Depends(oauth2_scheme), db: sqli
     if utilizator is None:
         raise eroare_autentificare
     return dict(utilizator)
+
+# --- CERINȚA EXTINDERE OPȚIONALĂ (BONUS HEALTH CHECK) ---
+@app.get("/healthz", status_code=200)
+def health_check():
+    return {"status": "ok"}
 
 # --- ENDPOINT-URI AUTENTIFICARE ---
 
@@ -229,3 +237,7 @@ def sterge_sarcina(
     cursor.execute("DELETE FROM sarcini WHERE id = ?", (sarcina_id,))
     db.commit()
     return {"message": "Sarcina a fost ștearsă"}
+
+# -------- ULTIMUL RÂND DIN FIȘIER (LAB #05) --------
+# Prinde orice rută de frontend și servește index.html direct din folderul static
+app.mount("/", StaticFiles(directory="static", html=True), name="static")

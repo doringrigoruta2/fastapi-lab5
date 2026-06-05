@@ -3,12 +3,12 @@
       xmlns:bookmark="http://www.freedesktop.org/standards/desktop-bookmarks"
       xmlns:mime="http://www.freedesktop.org/standards/shared-mime-info"
 >
-  <bookmark href="file:///home/vboxuser/requirements.txt" added="2026-03-16T17:26:57.784453Z" modified="2026-06-05T20:58:21.017835Z" visited="2026-03-16T17:26:57.784454Z">
+  <bookmark href="file:///home/vboxuser/requirements.txt" added="2026-03-16T17:26:57.784453Z" modified="2026-06-05T22:38:25.896382Z" visited="2026-03-16T17:26:57.784454Z">
     <info>
       <metadata owner="http://freedesktop.org">
         <mime:mime-type type="text/plain"/>
         <bookmark:applications>
-          <bookmark:application name="org.gnome.Nautilus" exec="&apos;gnome-text-editor %U&apos;" modified="2026-06-05T20:58:21.017834Z" count="3"/>
+          <bookmark:application name="org.gnome.Nautilus" exec="&apos;gnome-text-editor %U&apos;" modified="2026-06-05T22:38:25.896379Z" count="4"/>
         </bookmark:applications>
       </metadata>
     </info>
@@ -185,6 +185,63 @@
       <metadata owner="http://freedesktop.org">
         <bookmark:applications>
           <bookmark:application name="gnome-shell" exec="&apos;gio open %u&apos;" modified="2026-06-05T21:10:49.155276Z" count="1"/>
+        </bookmark:applications>
+      </metadata>
+    </info>
+  </bookmark>
+  <bookmark href="file:///home/vboxuser/.env" added="2026-06-05T22:39:17.225141Z" modified="2026-06-05T22:39:17.225144Z" visited="2026-06-05T22:39:17.225141Z">
+    <info>
+      <metadata owner="http://freedesktop.org">
+        <mime:mime-type type="application/octet-stream"/>
+        <bookmark:applications>
+          <bookmark:application name="gnome-text-editor" exec="&apos;gnome-text-editor %u&apos;" modified="2026-06-05T22:39:17.225143Z" count="1"/>
+        </bookmark:applications>
+      </metadata>
+    </info>
+  </bookmark>
+  <bookmark href="file:///home/vboxuser/render.yaml" added="2026-06-05T22:40:30.917414Z" modified="2026-06-05T22:40:30.917420Z" visited="2026-06-05T22:40:30.917415Z">
+    <info>
+      <metadata owner="http://freedesktop.org">
+        <mime:mime-type type="application/yaml"/>
+        <bookmark:applications>
+          <bookmark:application name="gnome-text-editor" exec="&apos;gnome-text-editor %u&apos;" modified="2026-06-05T22:40:30.917416Z" count="1"/>
+        </bookmark:applications>
+      </metadata>
+    </info>
+  </bookmark>
+  <bookmark href="file:///home/vboxuser/static" added="2026-06-05T22:44:54.677796Z" modified="2026-06-05T22:44:54.677802Z" visited="2026-06-05T22:44:54.677797Z">
+    <info>
+      <metadata owner="http://freedesktop.org">
+        <mime:mime-type type="inode/directory"/>
+        <bookmark:applications>
+          <bookmark:application name="org.gnome.Nautilus" exec="&apos;org.gnome.Nautilus %u&apos;" modified="2026-06-05T22:44:54.677799Z" count="1"/>
+        </bookmark:applications>
+      </metadata>
+    </info>
+  </bookmark>
+  <bookmark href="file:///home/vboxuser/Pictures/Screenshots/Screenshot%20from%202026-06-05%2022-57-03.png" added="2026-06-05T22:57:03.316099Z" modified="2026-06-05T22:57:03.316104Z" visited="2026-06-05T22:57:03.316100Z">
+    <info>
+      <metadata owner="http://freedesktop.org">
+        <bookmark:applications>
+          <bookmark:application name="gnome-shell" exec="&apos;gio open %u&apos;" modified="2026-06-05T22:57:03.316100Z" count="1"/>
+        </bookmark:applications>
+      </metadata>
+    </info>
+  </bookmark>
+  <bookmark href="file:///home/vboxuser/Pictures/Screenshots/Screenshot%20from%202026-06-05%2023-07-16.png" added="2026-06-05T23:07:16.591743Z" modified="2026-06-05T23:07:16.591747Z" visited="2026-06-05T23:07:16.591744Z">
+    <info>
+      <metadata owner="http://freedesktop.org">
+        <bookmark:applications>
+          <bookmark:application name="gnome-shell" exec="&apos;gio open %u&apos;" modified="2026-06-05T23:07:16.591744Z" count="1"/>
+        </bookmark:applications>
+      </metadata>
+    </info>
+  </bookmark>
+  <bookmark href="file:///home/vboxuser/Pictures/Screenshots/Screenshot%20from%202026-06-05%2023-09-40.png" added="2026-06-05T23:09:40.831694Z" modified="2026-06-05T23:09:40.831697Z" visited="2026-06-05T23:09:40.831695Z">
+    <info>
+      <metadata owner="http://freedesktop.org">
+        <bookmark:applications>
+          <bookmark:application name="gnome-shell" exec="&apos;gio open %u&apos;" modified="2026-06-05T23:09:40.831695Z" count="1"/>
         </bookmark:applications>
       </metadata>
     </info>

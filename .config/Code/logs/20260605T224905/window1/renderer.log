@@ -1,0 +1,8 @@
+2026-06-05 22:49:09.501 [info] Started local extension host with pid 17774.
+2026-06-05 22:49:13.991 [info] [AccountPolicyGate] apply: state=inactive, reason=undefined, isRestricted=false
+2026-06-05 22:49:19.045 [info] [AccountPolicyGate] apply: state=inactive, reason=undefined, isRestricted=false
+2026-06-05 22:49:53.347 [info] Extension host (LocalProcess pid: 17774) is unresponsive.
+2026-06-05 22:49:53.357 [info] Extension host (LocalProcess pid: 17774) is responsive.
+2026-06-05 22:50:01.843 [warning] Creation of workbench contribution 'terminal.chatAgentTools' took 162ms.
+2026-06-05 22:50:02.171 [info] Settings Sync: Account status changed from uninitialized to unavailable
+2026-06-05 22:50:07.201 [info] [perf] Render performance baseline is 161ms

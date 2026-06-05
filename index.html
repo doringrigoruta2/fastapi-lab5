@@ -70,15 +70,13 @@
     </div>
 
     <script>
-        const API = "http://localhost:8000";
-        let toateSarciniGlobal = []; // BONUS 3: Memorie globală pentru filtrare pe client
+        // MODIFICAT CONFORM LAB 5: URL relativ deoarece rulăm pe același origin
+        const API = ""; 
+        let toateSarciniGlobal = [];
 
-        // Verificăm dacă utilizatorul este deja logat la deschiderea paginii
         window.onload = function() {
             const token = localStorage.getItem("token");
-            if (token) {
-                arataAplicatie();
-            }
+            if (token) { arataAplicatie(); }
         };
 
         function arataAplicatie() {
@@ -96,7 +94,6 @@
             document.getElementById("contor-sarcini").textContent = "0 sarcini / 0 finalizate";
         }
 
-        // POST /inregistrare
         async function inregistrare() {
             const u = document.getElementById("auth-username").value;
             const p = document.getElementById("auth-password").value;
@@ -117,7 +114,6 @@
             } catch (err) { console.error(err); }
         }
 
-        // POST /autentificare (Corectat pentru OAuth2PasswordRequestForm)
         async function autentificare() {
             const u = document.getElementById("auth-username").value;
             const p = document.getElementById("auth-password").value;
@@ -125,7 +121,7 @@
             
             const corpFormular = new URLSearchParams();
             corpFormular.append("username", u);
-            corpFormular.append("password", p); // Sincronizat exact cu backend-ul
+            corpFormular.append("password", p);
 
             try {
                 const raspuns = await fetch(`${API}/autentificare`, {
@@ -143,12 +139,10 @@
             } catch (err) { console.error(err); }
         }
 
-        // GET /sarcini (Modificat pentru CERINȚA B)
         async function incarcaSarcini() {
             const token = localStorage.getItem("token");
             if (!token) return;
 
-            // CERINȚA B: Verificare dacă filtrul este bifat
             const doarNefinalizate = document.getElementById("doar-nefinalizate").checked;
             const url = doarNefinalizate ? `${API}/sarcini?doar_nefinalizate=true` : `${API}/sarcini`;
 
@@ -158,15 +152,13 @@
                 });
                 if (raspuns.ok) {
                     const sarcini = await raspuns.json();
-                    toateSarciniGlobal = sarcini; // Salvează copia pentru BONUS Căutare
+                    toateSarciniGlobal = sarcini;
                     randeazaSarcini(sarcini);
                 }
             } catch (err) { console.error(err); }
         }
 
-        // RANDARE LISTĂ (Modificat pentru CERINȚA A și BONUS CONTOR)
         function randeazaSarcini(sarcini) {
-            // BONUS 1: Calculare valori contor din navbar
             const totalSarcini = sarcini.length;
             const sarciniFinalizate = sarcini.filter(s => s.finalizata).length;
             document.getElementById("contor-sarcini").textContent = `${totalSarcini} sarcini / ${sarciniFinalizate} finalizate`;
@@ -198,7 +190,6 @@
             });
         }
 
-        // POST /sarcini
         async function creazaSarcina() {
             const token = localStorage.getItem("token");
             const t = document.getElementById("task-titlu").value;
@@ -223,7 +214,6 @@
             } catch (err) { console.error(err); }
         }
 
-        // PATCH /sarcini/{id}/finalizeaza
         async function finalizeazaSarcina(id) {
             const token = localStorage.getItem("token");
             try {
@@ -231,15 +221,11 @@
                     method: "PATCH",
                     headers: { "Authorization": `Bearer ${token}` }
                 });
-                if (raspuns.ok) {
-                    incarcaSarcini();
-                }
+                if (raspuns.ok) { incarcaSarcini(); }
             } catch (err) { console.error(err); }
         }
 
-        // DELETE /sarcini/{id} (Modificat pentru BONUS CONFIRMARE)
         async function stergeSarcina(id) {
-            // BONUS 2: Confirmare stergere
             const sigur = window.confirm("Ești sigur că vrei să ștergi această sarcină?");
             if (!sigur) return;
 
@@ -249,13 +235,10 @@
                     method: "DELETE",
                     headers: { "Authorization": `Bearer ${token}` }
                 });
-                if (raspuns.ok) {
-                    incarcaSarcini();
-                }
+                if (raspuns.ok) { incarcaSarcini(); }
             } catch (err) { console.error(err); }
         }
 
-        // CERINȚA A: Modificarea cardului în input-uri
         function editeazaSarcina(id, titluCurent, descriereCurenta) {
             const cardBody = document.getElementById(`sarcina-body-${id}`);
             cardBody.innerHTML = `
@@ -272,7 +255,6 @@
             `;
         }
 
-        // CERINȚA A: Trimiterea request-ului PUT
         async function salveazaEditare(id) {
             const token = localStorage.getItem("token");
             const titluNou = document.getElementById(`edit-titlu-${id}`).value;
@@ -287,16 +269,10 @@
                     },
                     body: JSON.stringify({ titlu: titluNou, descriere: descriereNoua })
                 });
-
-                if (raspuns.ok) {
-                    incarcaSarcini();
-                } else {
-                    alert("Eroare la salvarea modificărilor.");
-                }
+                if (raspuns.ok) { incarcaSarcini(); }
             } catch (err) { console.error(err); }
         }
 
-        // BONUS 3: Filtrare locală pe client (după titlu)
         function filtreazaDupaTitlu() {
             const textCautat = document.getElementById("cautare-task").value.toLowerCase();
             const sarciniFiltrate = toateSarciniGlobal.filter(s => 
