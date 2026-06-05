@@ -1,0 +1,6 @@
+venv/
+__pycache__/
+sarcini.db
+*.deb
+Downloads/
+.DS_Store

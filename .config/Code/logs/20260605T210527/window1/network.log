@@ -1,0 +1,4 @@
+2026-06-05 21:07:06.483 [error] #5: https://marketplace.visualstudio.com/_apis/public/gallery/vscode/eamodio/gitlens/latest - error GET Canceled
+2026-06-05 21:07:06.486 [error] #6: https://marketplace.visualstudio.com/_apis/public/gallery/vscode/github/vscode-pull-request-github/latest - error GET Canceled
+2026-06-05 21:07:06.487 [error] #7: https://marketplace.visualstudio.com/_apis/public/gallery/vscode/vscodevim/vim/latest - error GET Canceled
+2026-06-05 21:07:06.487 [error] #4: https://marketplace.visualstudio.com/_apis/public/gallery/extensionquery - error POST Canceled
