@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionar Sarcini</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="#">📝 TaskManager</a>
+            <span class="navbar-text ms-auto text-white fw-bold" id="contor-sarcini">
+                0 sarcini / 0 finalizate
+            </span>
+            <button class="btn btn-outline-light btn-sm ms-3" id="btn-deconectare" onclick="deconectare()" style="display: none;">Deconectare</button>
+        </div>
+    </nav>
+
+    <div class="container" style="max-width: 800px;">
+        
+        <div id="sectiune-Atenfificare" class="card card-body shadow-sm mb-4">
+            <h4 class="card-title text-center mb-3">Autentificare</h4>
+            <div class="mb-3">
+                <label class="form-label">Nume utilizator</label>
+                <input type="text" id="auth-username" class="form-control" placeholder="username">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Parolă</label>
+                <input type="password" id="auth-password" class="form-control" placeholder="parola">
+            </div>
+            <div class="d-flex gap-2">
+                <button class="btn btn-primary w-50" onclick="autentificare()">Intră în cont</button>
+                <button class="btn btn-outline-secondary w-50" onclick="inregistrare()">Înregistrare cont nou</button>
+            </div>
+        </div>
+
+        <div id="sectiune-Aplicatie" style="display: none;">
+            
+            <div class="card card-body shadow-sm mb-4">
+                <h5>Adaugă o sarcină nouă</h5>
+                <div class="mb-3">
+                    <input type="text" id="task-titlu" class="form-control" placeholder="Titlul sarcinii...">
+                </div>
+                <div class="mb-3">
+                    <textarea id="task-descriere" class="form-control" placeholder="Descrierea sarcinii..."></textarea>
+                </div>
+                <button class="btn btn-success" onclick="creazaSarcina()">Adaugă Sarcină</button>
+            </div>
+
+            <div class="card card-body shadow-sm mb-4">
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Căutare rapidă:</label>
+                    <input type="text" id="cautare-task" class="form-control" placeholder="Filtrează instant după titlu..." oninput="filtreazaDupaTitlu()">
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="doar-nefinalizate" onchange="incarcaSarcini()">
+                    <label class="form-check-label fw-bold" for="doar-nefinalizate">
+                        Afișează doar sarcinile nefinalizate
+                    </label>
+                </div>
+            </div>
+
+            <h5 class="mb-3">Sarcinile mele</h5>
+            <div id="lista-sarcini"></div>
+
+        </div>
+    </div>
+
+    <script>
+        const API = "http://localhost:8000";
+        let toateSarciniGlobal = []; // BONUS 3: Memorie globală pentru filtrare pe client
+
+        // Verificăm dacă utilizatorul este deja logat la deschiderea paginii
+        window.onload = function() {
+            const token = localStorage.getItem("token");
+            if (token) {
+                arataAplicatie();
+            }
+        };
+
+        function arataAplicatie() {
+            document.getElementById("sectiune-Atenfificare").style.display = "none";
+            document.getElementById("sectiune-Aplicatie").style.display = "block";
+            document.getElementById("btn-deconectare").style.display = "block";
+            incarcaSarcini();
+        }
+
+        function deconectare() {
+            localStorage.removeItem("token");
+            document.getElementById("sectiune-Atenfificare").style.display = "block";
+            document.getElementById("sectiune-Aplicatie").style.display = "none";
+            document.getElementById("btn-deconectare").style.display = "none";
+            document.getElementById("contor-sarcini").textContent = "0 sarcini / 0 finalizate";
+        }
+
+        // POST /inregistrare
+        async function inregistrare() {
+            const u = document.getElementById("auth-username").value;
+            const p = document.getElementById("auth-password").value;
+            if(!u || !p) { alert("Completează username și parola!"); return; }
+            
+            try {
+                const raspuns = await fetch(`${API}/inregistrare`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ username: u, parola: p })
+                });
+                const date = await raspuns.json();
+                if (raspuns.ok) {
+                    alert("Cont creat cu succes! Acum te poți autentifica.");
+                } else {
+                    alert("Eroare: " + (date.detail || "Nu s-a putut crea contul."));
+                }
+            } catch (err) { console.error(err); }
+        }
+
+        // POST /autentificare (Corectat pentru OAuth2PasswordRequestForm)
+        async function autentificare() {
+            const u = document.getElementById("auth-username").value;
+            const p = document.getElementById("auth-password").value;
+            if(!u || !p) { alert("Completează username și parola!"); return; }
+            
+            const corpFormular = new URLSearchParams();
+            corpFormular.append("username", u);
+            corpFormular.append("password", p); // Sincronizat exact cu backend-ul
+
+            try {
+                const raspuns = await fetch(`${API}/autentificare`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: corpFormular
+                });
+                const date = await raspuns.json();
+                if (raspuns.ok) {
+                    localStorage.setItem("token", date.access_token);
+                    arataAplicatie();
+                } else {
+                    alert("Autentificare eșuată: " + (date.detail || "Date incorecte."));
+                }
+            } catch (err) { console.error(err); }
+        }
+
+        // GET /sarcini (Modificat pentru CERINȚA B)
+        async function incarcaSarcini() {
+            const token = localStorage.getItem("token");
+            if (!token) return;
+
+            // CERINȚA B: Verificare dacă filtrul este bifat
+            const doarNefinalizate = document.getElementById("doar-nefinalizate").checked;
+            const url = doarNefinalizate ? `${API}/sarcini?doar_nefinalizate=true` : `${API}/sarcini`;
+
+            try {
+                const raspuns = await fetch(url, {
+                    headers: { "Authorization": `Bearer ${token}` }
+                });
+                if (raspuns.ok) {
+                    const sarcini = await raspuns.json();
+                    toateSarciniGlobal = sarcini; // Salvează copia pentru BONUS Căutare
+                    randeazaSarcini(sarcini);
+                }
+            } catch (err) { console.error(err); }
+        }
+
+        // RANDARE LISTĂ (Modificat pentru CERINȚA A și BONUS CONTOR)
+        function randeazaSarcini(sarcini) {
+            // BONUS 1: Calculare valori contor din navbar
+            const totalSarcini = sarcini.length;
+            const sarciniFinalizate = sarcini.filter(s => s.finalizata).length;
+            document.getElementById("contor-sarcini").textContent = `${totalSarcini} sarcini / ${sarciniFinalizate} finalizate`;
+
+            const container = document.getElementById("lista-sarcini");
+            container.innerHTML = "";
+
+            if (sarcini.length === 0) {
+                container.innerHTML = `<p class="text-muted text-center mt-3">Nu există sarcini.</p>`;
+                return;
+            }
+
+            sarcini.forEach(s => {
+                const html = `
+                    <div class="card mb-2 shadow-sm">
+                        <div class="card-body" id="sarcina-body-${s.id}">
+                            <h5 class="card-title ${s.finalizata ? 'text-decoration-line-through text-muted' : ''}">${s.titlu}</h5>
+                            <p class="card-text text-secondary">${s.descriere || "<i>Fără descriere</i>"}</p>
+                            
+                            <div class="d-flex gap-2 mt-2">
+                                ${!s.finalizata ? `<button class="btn btn-sm btn-success" onclick="finalizeazaSarcina(${s.id})">Finalizează</button>` : ''}
+                                <button class="btn btn-sm btn-outline-primary" onclick="editeazaSarcina(${s.id}, '${s.titlu}', '${s.descriere || ''}')">Editează</button>
+                                <button class="btn btn-sm btn-danger" onclick="stergeSarcina(${s.id})">Șterge</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += html;
+            });
+        }
+
+        // POST /sarcini
+        async function creazaSarcina() {
+            const token = localStorage.getItem("token");
+            const t = document.getElementById("task-titlu").value;
+            const d = document.getElementById("task-descriere").value;
+
+            if(!t) { alert("Titlul este obligatoriu!"); return; }
+
+            try {
+                const raspuns = await fetch(`${API}/sarcini`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ titlu: t, descriere: d })
+                });
+                if (raspuns.ok) {
+                    document.getElementById("task-titlu").value = "";
+                    document.getElementById("task-descriere").value = "";
+                    incarcaSarcini();
+                }
+            } catch (err) { console.error(err); }
+        }
+
+        // PATCH /sarcini/{id}/finalizeaza
+        async function finalizeazaSarcina(id) {
+            const token = localStorage.getItem("token");
+            try {
+                const raspuns = await fetch(`${API}/sarcini/${id}/finalizeaza`, {
+                    method: "PATCH",
+                    headers: { "Authorization": `Bearer ${token}` }
+                });
+                if (raspuns.ok) {
+                    incarcaSarcini();
+                }
+            } catch (err) { console.error(err); }
+        }
+
+        // DELETE /sarcini/{id} (Modificat pentru BONUS CONFIRMARE)
+        async function stergeSarcina(id) {
+            // BONUS 2: Confirmare stergere
+            const sigur = window.confirm("Ești sigur că vrei să ștergi această sarcină?");
+            if (!sigur) return;
+
+            const token = localStorage.getItem("token");
+            try {
+                const raspuns = await fetch(`${API}/sarcini/${id}`, {
+                    method: "DELETE",
+                    headers: { "Authorization": `Bearer ${token}` }
+                });
+                if (raspuns.ok) {
+                    incarcaSarcini();
+                }
+            } catch (err) { console.error(err); }
+        }
+
+        // CERINȚA A: Modificarea cardului în input-uri
+        function editeazaSarcina(id, titluCurent, descriereCurenta) {
+            const cardBody = document.getElementById(`sarcina-body-${id}`);
+            cardBody.innerHTML = `
+                <div class="mb-2">
+                    <label class="small fw-bold">Titlu nou:</label>
+                    <input type="text" id="edit-titlu-${id}" class="form-control form-control-sm" value="${titluCurent}">
+                </div>
+                <div class="mb-2">
+                    <label class="small fw-bold">Descriere nouă:</label>
+                    <textarea id="edit-descriere-${id}" class="form-control form-control-sm" rows="2">${descriereCurenta}</textarea>
+                </div>
+                <button class="btn btn-sm btn-primary" onclick="salveazaEditare(${id})">Salvează</button>
+                <button class="btn btn-sm btn-secondary" onclick="incarcaSarcini()">Anulează</button>
+            `;
+        }
+
+        // CERINȚA A: Trimiterea request-ului PUT
+        async function salveazaEditare(id) {
+            const token = localStorage.getItem("token");
+            const titluNou = document.getElementById(`edit-titlu-${id}`).value;
+            const descriereNoua = document.getElementById(`edit-descriere-${id}`).value;
+
+            try {
+                const raspuns = await fetch(`${API}/sarcini/${id}`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ titlu: titluNou, descriere: descriereNoua })
+                });
+
+                if (raspuns.ok) {
+                    incarcaSarcini();
+                } else {
+                    alert("Eroare la salvarea modificărilor.");
+                }
+            } catch (err) { console.error(err); }
+        }
+
+        // BONUS 3: Filtrare locală pe client (după titlu)
+        function filtreazaDupaTitlu() {
+            const textCautat = document.getElementById("cautare-task").value.toLowerCase();
+            const sarciniFiltrate = toateSarciniGlobal.filter(s => 
+                s.titlu.toLowerCase().includes(textCautat)
+            );
+            randeazaSarcini(sarciniFiltrate);
+        }
+    </script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+</body>
+</html>
+j&ȫ�      j#Z�j#Z�I���j#Z�   N    O^partitionKey=%28http%2C127.0.0.1%29,:http://127.0.0.1:5500/static/index.html necko:classified 1 peer-ip-address 127.0.0.1 peer-port 5500 strongly-framed 1 request-method GET response-head HTTP/1.1 200 OK
+Accept-Ranges: bytes
+Cache-Control: public, max-age=0
+Last-Modified: Fri, 05 Jun 2026 21:52:14 GMT
+ETag: W/"3685-19e99c5c1ba"
+Content-Type: text/html; charset=UTF-8
+Content-Length: 15450
+Date: Fri, 05 Jun 2026 23:25:24 GMT
+ original-response-headers Accept-Ranges: bytes
+Cache-Control: public, max-age=0
+Last-Modified: Fri, 05 Jun 2026 21:52:14 GMT
+ETag: W/"3685-19e99c5c1ba"
+Content-Type: text/html; charset=UTF-8
+Content-Length: 15450
+Date: Fri, 05 Jun 2026 23:25:24 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+ ctid 1 net-response-time-onstart 247 net-response-time-onstop 338   <Z
