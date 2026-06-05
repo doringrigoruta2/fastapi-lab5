@@ -2,9 +2,9 @@
 <application-state>
   <context id="">
     <application id="snap-store_snap-store.desktop" score="3.75" last-seen="1780693528"/>
-    <application id="org.gnome.Nautilus.desktop" score="13058.158203125" last-seen="1780696918"/>
-    <application id="firefox_firefox.desktop" score="6361.5546875" last-seen="1780697547"/>
-    <application id="org.gnome.Terminal.desktop" score="219" last-seen="1780697405"/>
+    <application id="org.gnome.Nautilus.desktop" score="13058.158203125" last-seen="1780698123"/>
+    <application id="firefox_firefox.desktop" score="6374.5546875" last-seen="1780698218"/>
+    <application id="org.gnome.Terminal.desktop" score="283" last-seen="1780698212"/>
     <application id="code_code.desktop" score="29" last-seen="1780697171"/>
     <application id="xdg-desktop-portal-gnome.desktop" score="0" last-seen="1780693557"/>
     <application id="update-manager.desktop" score="0" last-seen="1780685705"/>
