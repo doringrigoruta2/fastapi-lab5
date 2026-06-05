@@ -1,0 +1,15 @@
+{
+  "functions": {
+    "api/index.py": {
+      "excludeFiles": "(.venv/**|venv/**|env/**|*.db)"
+    }
+  },
+  "rewrites": [
+    { "source": "/inregistrare", "destination": "/api/index.py" },
+    { "source": "/autentificare", "destination": "/api/index.py" },
+    { "source": "/sarcini", "destination": "/api/index.py" },
+    { "source": "/sarcini/(.*)", "destination": "/api/index.py" },
+    { "source": "/healthz", "destination": "/api/index.py" },
+    { "source": "/(.*)", "destination": "/static/index.html" }
+  ]
+}

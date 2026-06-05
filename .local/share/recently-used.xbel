@@ -246,4 +246,24 @@
       </metadata>
     </info>
   </bookmark>
+  <bookmark href="file:///home/vboxuser/.gitignore" added="2026-06-05T23:57:43.344085Z" modified="2026-06-05T23:57:43.344090Z" visited="2026-06-05T23:57:43.344086Z">
+    <info>
+      <metadata owner="http://freedesktop.org">
+        <mime:mime-type type="text/plain"/>
+        <bookmark:applications>
+          <bookmark:application name="org.gnome.Nautilus" exec="&apos;gnome-text-editor %U&apos;" modified="2026-06-05T23:57:43.344088Z" count="1"/>
+        </bookmark:applications>
+      </metadata>
+    </info>
+  </bookmark>
+  <bookmark href="file:///home/vboxuser/vercel.json" added="2026-06-05T23:59:02.523082Z" modified="2026-06-05T23:59:02.523090Z" visited="2026-06-05T23:59:02.523084Z">
+    <info>
+      <metadata owner="http://freedesktop.org">
+        <mime:mime-type type="application/json"/>
+        <bookmark:applications>
+          <bookmark:application name="gnome-text-editor" exec="&apos;gnome-text-editor %u&apos;" modified="2026-06-05T23:59:02.523087Z" count="1"/>
+        </bookmark:applications>
+      </metadata>
+    </info>
+  </bookmark>
 </xbel>

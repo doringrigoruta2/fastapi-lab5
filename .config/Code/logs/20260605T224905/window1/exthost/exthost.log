@@ -27,3 +27,5 @@
 2026-06-05 23:25:17.705 [warning] [Decorations] CAPPING events from decorations provider vscode.git 1727
 2026-06-05 23:25:23.183 [warning] [Decorations] CAPPING events from decorations provider vscode.git 388
 2026-06-05 23:25:35.040 [warning] [Decorations] CAPPING events from decorations provider vscode.git 392
+2026-06-05 23:40:18.982 [info] Extension host terminating: received terminate message from renderer
+2026-06-05 23:40:19.885 [info] Extension host with pid 17774 exiting with code 0
