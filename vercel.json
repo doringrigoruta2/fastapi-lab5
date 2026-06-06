@@ -1,15 +1,15 @@
 {
   "functions": {
-    "api/index.py": {
+    "api/main.py": {
       "excludeFiles": "(.venv/**|venv/**|env/**|*.db)"
     }
   },
   "rewrites": [
-    { "source": "/inregistrare", "destination": "/api/index.py" },
-    { "source": "/autentificare", "destination": "/api/index.py" },
-    { "source": "/sarcini", "destination": "/api/index.py" },
-    { "source": "/sarcini/(.*)", "destination": "/api/index.py" },
-    { "source": "/healthz", "destination": "/api/index.py" },
+    { "source": "/inregistrare", "destination": "/api/main.py" },
+    { "source": "/autentificare", "destination": "/api/main.py" },
+    { "source": "/sarcini", "destination": "/api/main.py" },
+    { "source": "/sarcini/(.*)", "destination": "/api/main.py" },
+    { "source": "/healthz", "destination": "/api/main.py" },
     { "source": "/(.*)", "destination": "/static/index.html" }
   ]
 }
