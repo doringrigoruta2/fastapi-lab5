@@ -9,8 +9,13 @@ from pydantic import BaseModel
 import jwt
 from passlib.context import CryptContext
 from dotenv import load_dotenv
+from passlib.context import CryptContext
 
+# Această linie trebuie să fie fix așa pentru a folosi fallback-ul stabil de criptare
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 # --- INCARCARE CONFIGURATII PRIN VARIABILE DE MEDIU (LAB #05) ---
+# Dacă rulează pe Vercel, va folosi automat /tmp/sarcini.db unde are drepturi complete de scriere
+DATABASE_PATH = os.environ.get("DATABASE_PATH", "/tmp/sarcini.db")
 load_dotenv()
 
 SECRET_KEY = os.environ.get("SECRET_KEY", "cheie-dev-de-inlocuit-super-lunga")
@@ -237,6 +242,7 @@ def sterge_sarcina(
     cursor.execute("DELETE FROM sarcini WHERE id = ?", (sarcina_id,))
     db.commit()
     return {"message": "Sarcina a fost ștearsă"}
+
 
 # -------- ULTIMUL RÂND DIN FIȘIER (LAB #05) --------
 # Prinde orice rută de frontend și servește index.html direct din folderul static
