@@ -1,4 +1,0 @@
-2026-06-05 21:05:47.517 [info] Log level: Info
-2026-06-05 21:06:32.178 [info] Log level: Info
-2026-06-05 21:06:43.584 [warning] [GitHubBranchProtectionProvider][updateRepositoryBranchProtection] Failed to update repository branch protection: No GitHub authentication session available.
-2026-06-05 21:07:31.148 [warning] [GitHubSourceControlHistoryItemDetailsProvider][_loadAssignableUsers] Failed to load assignable user(s) for doringrigoruta2/fastapi-lab2-3: Error: No GitHub authentication session available.

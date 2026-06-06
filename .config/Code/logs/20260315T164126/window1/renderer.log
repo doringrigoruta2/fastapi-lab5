@@ -1,6 +1,0 @@
-2026-03-15 16:41:28.175 [info] Started local extension host with pid 8773.
-2026-03-15 16:41:28.231 [info] Started initializing default profile extensions in extensions installation folder. file:///home/vboxuser/.vscode/extensions
-2026-03-15 16:41:28.484 [info] Completed initializing default profile extensions in extensions installation folder. file:///home/vboxuser/.vscode/extensions
-2026-03-15 16:41:28.838 [info] MCP Registry configured: https://api.mcp.github.com
-2026-03-15 16:41:29.071 [info] Settings Sync: Account status changed from uninitialized to unavailable
-2026-03-15 16:41:31.179 [info] [perf] Render performance baseline is 21ms
