@@ -5,11 +5,11 @@
     }
   },
   "rewrites": [
-    { "source": "/inregistrare", "destination": "/api/main.py" },
-    { "source": "/autentificare", "destination": "/api/main.py" },
-    { "source": "/sarcini", "destination": "/api/main.py" },
-    { "source": "/sarcini/(.*)", "destination": "/api/main.py" },
-    { "source": "/healthz", "destination": "/api/main.py" },
+    { "source": "/inregistrare", "destination": "/main.py" },
+    { "source": "/autentificare", "destination": "/main.py" },
+    { "source": "/sarcini", "destination": "/main.py" },
+    { "source": "/sarcini/(.*)", "destination": "/main.py" },
+    { "source": "/healthz", "destination": "/main.py" },
     { "source": "/(.*)", "destination": "/static/index.html" }
   ]
 }
