@@ -1,6 +1,6 @@
 {
   "functions": {
-    "api/main.py": {
+    "main.py": {
       "excludeFiles": "(.venv/**|venv/**|env/**|*.db)"
     }
   },
