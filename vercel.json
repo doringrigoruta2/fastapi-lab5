@@ -1,15 +1,14 @@
 {
-  "functions": {
-    "main.py": {
-      "excludeFiles": "(.venv/**|venv/**|env/**|*.db)"
+  "builds": [
+    {
+      "src": "main.py",
+      "use": "@vercel/python"
     }
-  },
-  "rewrites": [
-    { "source": "/inregistrare", "destination": "/main.py" },
-    { "source": "/autentificare", "destination": "/main.py" },
-    { "source": "/sarcini", "destination": "/main.py" },
-    { "source": "/sarcini/(.*)", "destination": "/main.py" },
-    { "source": "/healthz", "destination": "/main.py" },
-    { "source": "/(.*)", "destination": "/static/index.html" }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "main.py"
+    }
   ]
 }
